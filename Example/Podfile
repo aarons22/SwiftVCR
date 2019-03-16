@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'VCR_Example' do
+  pod 'VCR', :path => '../'
+
+  target 'VCR_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
