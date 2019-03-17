@@ -19,8 +19,9 @@ class Tests: XCTestCase {
 
         let request = URLRequest(url: URL(string: "https://reqres.in/api/users")!)
         let session = VCRSession()
+        session.insertTape("example", record: true)
 
-        let http = HTTPWrapper(session: session)
+        let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "User is signed in")
         http.request(request) { (success) in
@@ -32,10 +33,10 @@ class Tests: XCTestCase {
     }
 }
 
-class HTTPWrapper {
+class HTTPClient {
     let session: URLSession
 
-    init(session: URLSession) {
+    init(session: URLSession = URLSession.shared) {
         self.session = session
     }
 
