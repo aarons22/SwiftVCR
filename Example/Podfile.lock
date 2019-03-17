@@ -1,0 +1,16 @@
+PODS:
+  - VCR (0.1.0)
+
+DEPENDENCIES:
+  - VCR (from `../`)
+
+EXTERNAL SOURCES:
+  VCR:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  VCR: 10e07f0e0e2099606e4ced9ac9f91c0fef9900d2
+
+PODFILE CHECKSUM: ca1275266cec8eb35e6b26496b4f8ae6234de7ef
+
+COCOAPODS: 1.5.3

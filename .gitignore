@@ -18,6 +18,11 @@ profile
 DerivedData
 *.hmap
 *.ipa
+*.xcworkspace/
+
+## Other
+*.moved-aside
+*.xcuserstate
 
 # Bundler
 .bundle
@@ -34,4 +39,5 @@ Carthage/Build
 # Note: if you ignore the Pods directory, make sure to uncomment
 # `pod install` in .travis.yml
 #
-# Pods/
+Pods/
+Example/Pods/
