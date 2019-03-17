@@ -10,14 +10,59 @@ import Foundation
 internal class Tape {
     let name: String
     let record: Bool
+    var data: Data?
 
     init(name: String, record: Bool) {
         self.name = name
         self.record = record
+
+        if record {
+            let fileManager = FileManager.default
+            let directory = VCRSession.directory
+            if !fileManager.fileExists(atPath: directory) {
+                do {
+                    try fileManager.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    fatalError("Failed to create directory: \(directory)")
+                }
+            }
+        }
+    }
+
+    init?(name: String) {
+        self.name = name
+        self.record = false
+
+        let output = VCRSession.directory.appending("/\(name).json")
+        let url = URL(fileURLWithPath: output)
+        if let data = try? Data(contentsOf: url) {
+            self.data = data
+        } else {
+            return nil
+        }
+    }
+
+    func write(data: Data?, response: URLResponse?, error: Error?) {
+        let output = VCRSession.directory.appending("/\(name).json")
+
+        if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) {
+            print(json)
+
+            if let stringData = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]) {
+                try? stringData.write(to: URL(fileURLWithPath: output))
+            }
+        }
     }
 }
 
 public class VCRSession: URLSession {
+
+    static var directory: String {
+        guard let directory = ProcessInfo.processInfo.environment["VCR_DIR"] else {
+            fatalError("VCR directory not defined")
+        }
+        return directory
+    }
 
     /// Maintaing a "clean" session for recording actual requests.
     let passthroughSession: URLSession
@@ -33,9 +78,20 @@ public class VCRSession: URLSession {
         super.init()
     }
 
-    public func insertTape(_ tapeName: String, record: Bool = false) {
-        let tape = Tape(name: tapeName, record: record)
+    public func insertTape(_ tapeName: String) {
+        guard let tape = Tape(name: tapeName) else {
+            fatalError("NO TAPE FOUND")
+        }
         tapes.append(tape)
+    }
+
+    public func insertTape(_ tapeName: String, record: Bool) {
+        if record {
+            let tape = Tape(name: tapeName, record: record)
+            tapes.append(tape)
+        } else {
+            self.insertTape(tapeName)
+        }
     }
 
     override public func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
@@ -60,9 +116,6 @@ class VCRTask: URLSessionDataTask {
     var requestIndex = 0
 
     override func resume() {
-        guard let directory = ProcessInfo.processInfo.environment["VCR_DIR"] else {
-            fatalError("VCR directory not defined")
-        }
         let completion = self.completionHandler
 
         guard session.tapes.count >= requestIndex + 1 else {
@@ -75,40 +128,14 @@ class VCRTask: URLSessionDataTask {
         }
 
         let tape = session.tapes[requestIndex]
-        let output = directory.appending("/\(tape.name).json")
-
-        let fileManager = FileManager.default
-
         if tape.record {
-            if !fileManager.fileExists(atPath: directory) {
-                do {
-                    try fileManager.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    fatalError("Failed to create directory: \(directory)")
-                }
-            }
             let task = session.passthroughSession.dataTask(with: request) { (data, response, error) in
-                if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) {
-                    print(json)
-
-                    if let stringData = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]) {
-                        try? stringData.write(to: URL(fileURLWithPath: output))
-                    }
-
-                }
+                tape.write(data: data, response: response, error: error)
                 completion(data, response, error)
             }
             task.resume()
         } else {
-            let url = URL(fileURLWithPath: output)
-            if let data = try? Data(contentsOf: url) {
-                completion(data, nil, nil)
-//                completion(data, response, error)
-            } else {
-                // User inserted tape that didn't exist
-                // TODO: should a new tape be recorded in this scenario?
-                fatalError("NO TAPE FOUND: \(output)")
-            }
+            completion(tape.data, nil, nil)
         }
 
     }
