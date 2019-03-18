@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Aaron Sapp' => 'sapp.aaron@gmail.com' }
   s.source           = { :git => 'https://github.com/aarons22/SwiftVCR.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/aaronsapp'
+  s.swift_version = '4.0'
 
   s.ios.deployment_target = '10.0'
 
