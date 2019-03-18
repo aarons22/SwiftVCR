@@ -1,4 +1,17 @@
 {
+  "status_code" : 200,
+  "headers" : {
+    "Server" : "cloudflare",
+    "Content-Type" : "application\/json; charset=utf-8",
+    "expect-ct" : "max-age=604800, report-uri=\"https:\/\/report-uri.cloudflare.com\/cdn-cgi\/beacon\/expect-ct\"",
+    "cf-ray" : "4b935a5d286a0a18-ATL",
+    "Set-Cookie" : "__cfduid=d608217a7af1c95a19c5a4214e800ba3d1552843055; expires=Mon, 16-Mar-20 17:17:35 GMT; path=\/; domain=.reqres.in; HttpOnly",
+    "x-powered-by" : "Express",
+    "Content-Encoding" : "br",
+    "Etag" : "W\/\"1bb-D+c3sZ5g5u\/nmLPQRl1uVo2heAo\"",
+    "Access-Control-Allow-Origin" : "*",
+    "Date" : "Mon, 18 Mar 2019 01:15:00 GMT"
+  },
   "data" : {
     "total_pages" : 4,
     "per_page" : 3,
@@ -25,17 +38,5 @@
     "total" : 12,
     "page" : 1
   },
-  "headers" : {
-    "Content-Type" : "application\/json; charset=utf-8",
-    "Date" : "Mon, 18 Mar 2019 00:34:19 GMT",
-    "Access-Control-Allow-Origin" : "*",
-    "Etag" : "W\/\"1bb-D+c3sZ5g5u\/nmLPQRl1uVo2heAo\"",
-    "x-powered-by" : "Express",
-    "Content-Encoding" : "br",
-    "Server" : "cloudflare",
-    "expect-ct" : "max-age=604800, report-uri=\"https:\/\/report-uri.cloudflare.com\/cdn-cgi\/beacon\/expect-ct\"",
-    "cf-ray" : "4b931ec8abefba72-ATL",
-    "Set-Cookie" : "__cfduid=d608217a7af1c95a19c5a4214e800ba3d1552843055; expires=Mon, 16-Mar-20 17:17:35 GMT; path=\/; domain=.reqres.in; HttpOnly"
-  },
-  "status_code" : 200
+  "url" : "https:\/\/reqres.in\/api\/users"
 }

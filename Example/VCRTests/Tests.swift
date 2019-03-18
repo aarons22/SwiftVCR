@@ -10,9 +10,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "json response succeeds")
-        http.request(request) { (success) in
+        http.request(request) { (success, url) in
             expectation.fulfill()
             XCTAssertTrue(success)
+            XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users")
         }
 
         wait(for: [expectation], timeout: 5.0)
@@ -26,9 +27,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "html response succeeds")
-        http.request(request) { (success) in
+        http.request(request) { (success, url) in
             expectation.fulfill()
             XCTAssertTrue(success)
+            XCTAssertEqual(url?.absoluteString, "https://www.google.com")
         }
 
         wait(for: [expectation], timeout: 5.0)
@@ -42,9 +44,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "html response succeeds")
-        http.request(request) { (success) in
+        http.request(request) { (success, url) in
             expectation.fulfill()
             XCTAssertTrue(success)
+            XCTAssertEqual(url?.absoluteString, "https://www.apple.com")
         }
 
         wait(for: [expectation], timeout: 5.0)
@@ -58,9 +61,9 @@ class HTTPClient {
         self.session = session
     }
 
-    func request(_ request: URLRequest, completion: @escaping (Bool) -> Void) {
+    func request(_ request: URLRequest, completion: @escaping (Bool, URL?) -> Void) {
         let task = self.session.dataTask(with: request) { (data, response, error) in
-            completion(true)
+            completion(true, response?.url)
         }
 
         task.resume()

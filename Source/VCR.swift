@@ -37,8 +37,6 @@ internal class Tape {
         let output = VCRSession.directory.appending("/\(name).json")
         let url = URL(fileURLWithPath: output)
         if let data = try? Data(contentsOf: url) {
-            self.data = data
-
             if let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]),
                 let dict = json as? [String: Any] {
                 self.decode(json: dict)
@@ -53,9 +51,11 @@ internal class Tape {
         var output = [String: Any]()
         var contentType: String?
 
-        if let httpResponse = response as? HTTPURLResponse {
+        if let httpResponse = response as? HTTPURLResponse,
+            let url = httpResponse.url {
             output["headers"] = httpResponse.allHeaderFields
             output["status_code"] = httpResponse.statusCode
+            output["url"] = url.absoluteString
             contentType = httpResponse.allHeaderFields["Content-Type"] as? String
         }
 
@@ -97,7 +97,11 @@ internal class Tape {
         if let headers = json["headers"] as? [AnyHashable : Any],
             let contentType = headers["Content-Type"] as? String,
             let statusCode = json["status_code"] as? Int,
+            let urlString = json["url"] as? String,
+            let url = URL(string: urlString),
             let data = json["data"] {
+
+            // DATA
 
             if contentType.contains("application/json"),
                 let jsonData = try? JSONSerialization.data(withJSONObject: data, options: []) {
@@ -117,6 +121,13 @@ internal class Tape {
                     }
                 }
             }
+
+            // RESPONSE
+            let response = HTTPURLResponse(url: url,
+                                           statusCode: statusCode,
+                                           httpVersion: nil,
+                                           headerFields: headers as? [String : String])
+            self.response = response
         }
     }
 }
@@ -201,7 +212,7 @@ class VCRTask: URLSessionDataTask {
             }
             task.resume()
         } else {
-            completion(tape.data, nil, nil)
+            completion(tape.data, tape.response, nil)
         }
 
     }
