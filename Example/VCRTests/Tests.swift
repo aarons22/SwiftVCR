@@ -30,7 +30,7 @@ class Tests: XCTestCase {
         http.request(request) { (success, url) in
             expectation.fulfill()
             XCTAssertTrue(success)
-            XCTAssertEqual(url?.absoluteString, "https://www.google.com")
+            XCTAssertEqual(url?.absoluteString, "https://www.google.com/")
         }
 
         wait(for: [expectation], timeout: 5.0)
@@ -47,7 +47,7 @@ class Tests: XCTestCase {
         http.request(request) { (success, url) in
             expectation.fulfill()
             XCTAssertTrue(success)
-            XCTAssertEqual(url?.absoluteString, "https://www.apple.com")
+            XCTAssertEqual(url?.absoluteString, "https://www.apple.com/")
         }
 
         wait(for: [expectation], timeout: 5.0)
