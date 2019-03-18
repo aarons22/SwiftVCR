@@ -46,8 +46,22 @@ public class VCRSession: URLSession {
         }
     }
 
+    var requestIndex: Int = 0
+
     override public func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        let task = VCRTask(session: self, request: request, completionHandler: completionHandler)
+        guard tapes.count >= requestIndex + 1 else {
+            print("[VCR] Not enough tapes for requests made, falling back to passthrough session")
+            let task = passthroughSession.dataTask(with: request) { (data, response, error) in
+                completionHandler(data, response, error)
+            }
+            return task
+        }
+        let tape = tapes[requestIndex]
+        requestIndex += 1
+        let task = VCRTask(session: self,
+                           tape: tape,
+                           request: request,
+                           completionHandler: completionHandler)
         return task
     }
 }

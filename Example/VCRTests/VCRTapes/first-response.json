@@ -1,0 +1,42 @@
+{
+  "data" : {
+    "total_pages" : 4,
+    "per_page" : 3,
+    "data" : [
+      {
+        "id" : 1,
+        "last_name" : "Bluth",
+        "first_name" : "George",
+        "avatar" : "https:\/\/s3.amazonaws.com\/uifaces\/faces\/twitter\/calebogden\/128.jpg"
+      },
+      {
+        "id" : 2,
+        "last_name" : "Weaver",
+        "first_name" : "Janet",
+        "avatar" : "https:\/\/s3.amazonaws.com\/uifaces\/faces\/twitter\/josephstein\/128.jpg"
+      },
+      {
+        "id" : 3,
+        "last_name" : "Wong",
+        "first_name" : "Emma",
+        "avatar" : "https:\/\/s3.amazonaws.com\/uifaces\/faces\/twitter\/olegpogodaev\/128.jpg"
+      }
+    ],
+    "total" : 12,
+    "page" : 1
+  },
+  "headers" : {
+    "Etag" : "W\/\"1bb-D+c3sZ5g5u\/nmLPQRl1uVo2heAo\"",
+    "Date" : "Mon, 18 Mar 2019 12:42:01 GMT",
+    "x-powered-by" : "Express",
+    "Content-Type" : "application\/json; charset=utf-8",
+    "Content-Encoding" : "br",
+    "expect-ct" : "max-age=604800, report-uri=\"https:\/\/report-uri.cloudflare.com\/cdn-cgi\/beacon\/expect-ct\"",
+    "Access-Control-Allow-Origin" : "*",
+    "cf-ray" : "4b9748c0d9f8ba72-ATL",
+    "Server" : "cloudflare",
+    "Set-Cookie" : "__cfduid=d608217a7af1c95a19c5a4214e800ba3d1552843055; expires=Mon, 16-Mar-20 17:17:35 GMT; path=\/; domain=.reqres.in; HttpOnly"
+  },
+  "status_code" : 200,
+  "url" : "https:\/\/reqres.in\/api\/users"
+}

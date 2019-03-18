@@ -52,6 +52,32 @@ class Tests: XCTestCase {
 
         wait(for: [expectation], timeout: 5.0)
     }
+
+    func testMultiple() {
+        var request = URLRequest(url: URL(string: "https://reqres.in/api/users")!)
+        let session = VCRSession()
+        session.insertTape("first-response", record: true)
+        session.insertTape("second-response", record: true)
+
+        let http = HTTPClient(session: session)
+
+        let expectation = XCTestExpectation(description: "json response succeeds")
+        http.request(request) { (success, url) in
+            expectation.fulfill()
+            XCTAssertTrue(success)
+            XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users")
+        }
+
+        let expectation2 = XCTestExpectation(description: "json response succeeds")
+        request = URLRequest(url: URL(string: "https://reqres.in/api/users/1")!)
+        http.request(request) { (success, url) in
+            expectation2.fulfill()
+            XCTAssertTrue(success)
+            XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users/1")
+        }
+
+        wait(for: [expectation, expectation2], timeout: 5.0)
+    }
 }
 
 class HTTPClient {

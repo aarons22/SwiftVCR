@@ -1,0 +1,23 @@
+{
+  "data" : {
+    "data" : {
+      "id" : 1,
+      "last_name" : "Bluth",
+      "first_name" : "George",
+      "avatar" : "https:\/\/s3.amazonaws.com\/uifaces\/faces\/twitter\/calebogden\/128.jpg"
+    }
+  },
+  "headers" : {
+    "Etag" : "W\/\"88-a96vdDOo4SfKEOyPCHOELDYW3Sg\"",
+    "Date" : "Mon, 18 Mar 2019 12:42:01 GMT",
+    "x-powered-by" : "Express",
+    "Content-Type" : "application\/json; charset=utf-8",
+    "Content-Encoding" : "br",
+    "expect-ct" : "max-age=604800, report-uri=\"https:\/\/report-uri.cloudflare.com\/cdn-cgi\/beacon\/expect-ct\"",
+    "Access-Control-Allow-Origin" : "*",
+    "cf-ray" : "4b9748c0d9f5ba72-ATL",
+    "Server" : "cloudflare"
+  },
+  "status_code" : 200,
+  "url" : "https:\/\/reqres.in\/api\/users\/1"
+}
