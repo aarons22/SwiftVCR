@@ -43,15 +43,52 @@ internal class Tape {
     }
 
     func write(data: Data?, response: URLResponse?, error: Error?) {
-        let output = VCRSession.directory.appending("/\(name).json")
+        let outputDir = VCRSession.directory.appending("/\(name).json")
+        var output = [String: Any]()
+        var contentType: String?
 
-        if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) {
-            print(json)
+        if let httpResponse = response as? HTTPURLResponse {
+            output["headers"] = httpResponse.allHeaderFields
+            output["status_code"] = httpResponse.statusCode
+            contentType = httpResponse.allHeaderFields["Content-Type"] as? String
+        }
 
-            if let stringData = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]) {
-                try? stringData.write(to: URL(fileURLWithPath: output))
+        if let contentType = contentType {
+            output["data"] = self.encode(data, contentType: contentType)
+        }
+
+        if let stringData = try? JSONSerialization.data(withJSONObject: output, options: [.prettyPrinted]) {
+            try? stringData.write(to: URL(fileURLWithPath: outputDir))
+        }
+    }
+
+    private func encode(_ data: Data?, contentType: String) -> Any? {
+        if let data = data {
+            // JSON Response
+            if contentType.contains("application/json"),
+                let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) {
+                return json
+            }
+
+            if contentType.contains("text") {
+                // UTF-8 Response
+                if contentType.contains("UTF-8") {
+                    if let string = String.init(data: data, encoding: .utf8) {
+                        return string
+                    }
+                } else {
+                    // ascii Response
+                    if let string = String.init(data: data, encoding: .ascii) {
+                        return string
+                    }
+                }
             }
         }
+        return nil
+    }
+
+    private func decode() {
+
     }
 }
 

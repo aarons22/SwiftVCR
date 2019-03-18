@@ -2,31 +2,49 @@ import XCTest
 import VCR
 
 class Tests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-
+    func testJson() {
         let request = URLRequest(url: URL(string: "https://reqres.in/api/users")!)
         let session = VCRSession()
-        session.insertTape("example", record: true)
+        session.insertTape("json-response", record: true)
 
         let http = HTTPClient(session: session)
 
-        let expectation = XCTestExpectation(description: "User is signed in")
+        let expectation = XCTestExpectation(description: "json response succeeds")
         http.request(request) { (success) in
+            expectation.fulfill()
+            XCTAssertTrue(success)
+        }
 
-             expectation.fulfill()
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testHtmlUtf8() {
+        let request = URLRequest(url: URL(string: "https://www.google.com")!)
+        let session = VCRSession()
+        session.insertTape("html-utf8-response", record: true)
+
+        let http = HTTPClient(session: session)
+
+        let expectation = XCTestExpectation(description: "html response succeeds")
+        http.request(request) { (success) in
+            expectation.fulfill()
+            XCTAssertTrue(success)
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testHtmlAscii() {
+        let request = URLRequest(url: URL(string: "https://www.google.com")!)
+        let session = VCRSession()
+        session.insertTape("html-ascii-response", record: true)
+
+        let http = HTTPClient(session: session)
+
+        let expectation = XCTestExpectation(description: "html response succeeds")
+        http.request(request) { (success) in
+            expectation.fulfill()
+            XCTAssertTrue(success)
         }
 
         wait(for: [expectation], timeout: 5.0)
