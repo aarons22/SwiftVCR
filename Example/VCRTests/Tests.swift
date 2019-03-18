@@ -5,7 +5,7 @@ class Tests: XCTestCase {
     func testJson() {
         let request = URLRequest(url: URL(string: "https://reqres.in/api/users")!)
         let session = VCRSession()
-        session.insertTape("json-response", record: true)
+        session.insertTape("json-response")
 
         let http = HTTPClient(session: session)
 
@@ -21,7 +21,7 @@ class Tests: XCTestCase {
     func testHtmlUtf8() {
         let request = URLRequest(url: URL(string: "https://www.google.com")!)
         let session = VCRSession()
-        session.insertTape("html-utf8-response", record: true)
+        session.insertTape("html-utf8-response")
 
         let http = HTTPClient(session: session)
 
@@ -35,9 +35,9 @@ class Tests: XCTestCase {
     }
 
     func testHtmlAscii() {
-        let request = URLRequest(url: URL(string: "https://www.google.com")!)
+        let request = URLRequest(url: URL(string: "https://www.apple.com")!)
         let session = VCRSession()
-        session.insertTape("html-ascii-response", record: true)
+        session.insertTape("html-ascii-response")
 
         let http = HTTPClient(session: session)
 
