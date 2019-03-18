@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'VCR'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'VCR is a lightweight tool to record and playback http requests for mocking in swift.'
 
 # This description is used to generate tags and improve search results.
