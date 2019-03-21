@@ -56,8 +56,8 @@ class Tests: XCTestCase {
     func testMultiple() {
         var request = URLRequest(url: URL(string: "https://reqres.in/api/users")!)
         let session = VCRSession()
-        session.insertTape("first-response", record: true)
-        session.insertTape("second-response", record: true)
+        session.insertTape("first-response")
+        session.insertTape("second-response")
 
         let http = HTTPClient(session: session)
 

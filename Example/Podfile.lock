@@ -1,5 +1,5 @@
 PODS:
-  - VCR (0.1.2)
+  - VCR (0.1.3)
 
 DEPENDENCIES:
   - VCR (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  VCR: ef3c081ddd1e00b7cae04785c97dbf21728101a0
+  VCR: 4364775be1b5099f95fc6e292f59614e83f5579a
 
 PODFILE CHECKSUM: ca1275266cec8eb35e6b26496b4f8ae6234de7ef
 
