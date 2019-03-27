@@ -270,7 +270,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VCR_Example/Pods-VCR_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-VCR_Example/Pods-VCR_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VCR/VCR.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -281,7 +281,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCR_Example/Pods-VCR_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VCR_Example/Pods-VCR_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73DE9431CD0343324C939733 /* [CP] Check Pods Manifest.lock */ = {
