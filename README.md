@@ -81,7 +81,7 @@ let client = HTTPClient(session: session)
 
 ## Author
 
-Aaron Sapp, sapp.aaron@gmail.com
+Aaron Sapp, [@aaronsapp](https://twitter.com/aaronsapp)
 
 ## License
 
