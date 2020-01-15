@@ -1,12 +1,6 @@
 use_frameworks!
 platform :ios, '10.0'
 
-target 'VCR_Example' do
+target 'VCR_Tests' do
   pod 'VCR', :path => '../'
-
-  target 'VCR_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end

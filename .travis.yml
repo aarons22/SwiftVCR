@@ -2,7 +2,7 @@ os: osx
 language: swift
 osx_image: xcode10.2
 xcode_workspace: VCR.xcworkspace
-xcode_scheme: VCR-Example
+xcode_scheme: VCR_Tests
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
 cache: cocoapods
 
