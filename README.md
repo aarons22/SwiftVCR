@@ -8,16 +8,7 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
-
 ## Installation
-
-VCR is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'VCR'
-```
 
 In order to save tapes, you will need to define `VCR_DIR` in your scheme. This should point to the directory where you want tapes to be stored. We normally use this:
 
@@ -26,6 +17,15 @@ In order to save tapes, you will need to define `VCR_DIR` in your scheme. This s
 |`VCR_DIR`|`$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/VCRTapes`|
 
 <!-- TODO: Insert screenshot of xcode scheme -->
+
+### Cocoapods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate VCR into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+
+```ruby
+pod 'VCR'
+```
 
 ## Usage
 

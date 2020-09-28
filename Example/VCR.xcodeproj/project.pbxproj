@@ -177,15 +177,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-VCR_Tests/Pods-VCR_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VCR/VCR.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VCR.framework",
 			);
