@@ -3,7 +3,7 @@ language: swift
 osx_image: xcode11.6
 xcode_workspace: VCR.xcworkspace
 xcode_scheme: VCR_Tests
-xcode_destination: platform=iOS Simulator,OS=13.4,name=iPhone X
+xcode_destination: platform=iOS Simulator,OS=13.4,name=iPhone 11
 cache: cocoapods
 
 before_install:
