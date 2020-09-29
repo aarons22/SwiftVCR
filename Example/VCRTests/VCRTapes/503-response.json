@@ -1,0 +1,14 @@
+{
+  "headers" : {
+    "Content-Type" : "text\/html; charset=utf-8",
+    "Content-Length" : "0",
+    "Date" : "Tue, 29 Sep 2020 00:31:52 GMT",
+    "Access-Control-Allow-Origin" : "*",
+    "Access-Control-Allow-Credentials" : "true",
+    "Server" : "gunicorn\/19.9.0",
+    "Connection" : "keep-alive"
+  },
+  "status_code" : 503,
+  "url" : "http:\/\/httpbin.org\/status\/503",
+  "data" : ""
+}

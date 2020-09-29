@@ -10,9 +10,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "json response succeeds")
-        http.request(request) { (success, url) in
+        http.request(request) { (success, url, statusCode) in
             XCTAssertTrue(success)
             XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users")
+            XCTAssertEqual(statusCode, 200)
             expectation.fulfill()
         }
 
@@ -27,9 +28,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "html response succeeds")
-        http.request(request) { (success, url) in
+        http.request(request) { (success, url, statusCode) in
             XCTAssertTrue(success)
             XCTAssertEqual(url?.absoluteString, "https://www.google.com/")
+            XCTAssertEqual(statusCode, 200)
             expectation.fulfill()
         }
 
@@ -44,9 +46,10 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "html response succeeds")
-        http.request(request) { (success, url) in
+        http.request(request) { (success, url, statusCode) in
             XCTAssertTrue(success)
             XCTAssertEqual(url?.absoluteString, "https://www.apple.com/")
+            XCTAssertEqual(statusCode, 200)
             expectation.fulfill()
         }
 
@@ -62,21 +65,40 @@ class Tests: XCTestCase {
         let http = HTTPClient(session: session)
 
         let expectation = XCTestExpectation(description: "json response succeeds")
-        http.request(request) { (success, url) in
+        http.request(request) { (success, url, statusCode) in
             XCTAssertTrue(success)
             XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users")
+            XCTAssertEqual(statusCode, 200)
             expectation.fulfill()
         }
 
         let expectation2 = XCTestExpectation(description: "json response succeeds")
         request = URLRequest(url: URL(string: "https://reqres.in/api/users/1")!)
-        http.request(request) { (success, url) in
+        http.request(request) { (success, url, statusCode) in
             XCTAssertTrue(success)
             XCTAssertEqual(url?.absoluteString, "https://reqres.in/api/users/1")
+            XCTAssertEqual(statusCode, 200)
             expectation2.fulfill()
         }
 
         wait(for: [expectation, expectation2], timeout: 5.0)
+    }
+
+    func test503() {
+        let request = URLRequest(url: URL(string: "http://httpbin.org/status/503")!)
+        let session = VCRSession()
+        session.insertTape("503-response")
+
+        let http = HTTPClient(session: session)
+
+        let expectation = XCTestExpectation(description: "503 response fails")
+        http.request(request) { (success, url, statusCode) in
+            XCTAssertTrue(success)
+            XCTAssertEqual(statusCode, 503)
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 5.0)
     }
 
     @available(iOS 13.0, *)
@@ -110,9 +132,11 @@ class HTTPClient {
         self.session = session
     }
 
-    func request(_ request: URLRequest, completion: @escaping (Bool, URL?) -> Void) {
+    func request(_ request: URLRequest, completion: @escaping (Bool, URL?, Int) -> Void) {
         let task = session.dataTask(with: request) { (data, response, error) in
-            completion(true, response?.url)
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(true, response?.url, httpResponse.statusCode)
+            }
         }
 
         task.resume()
